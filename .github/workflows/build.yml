@@ -1,0 +1,30 @@
+name: Build innoextract (static Linux with LFS)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout source
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y cmake g++ libboost-all-dev zlib1g-dev
+
+    - name: Build
+      run: |
+        mkdir build && cd build
+        cmake .. -DCMAKE_BUILD_TYPE=Release
+        make -j$(nproc)
+        strip innoextract
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: innoextract-linux
+        path: build/innoextract
