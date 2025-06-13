@@ -14,7 +14,13 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt update
-        sudo apt install -y cmake g++ libboost-all-dev zlib1g-dev
+        sudo apt install -y \
+          cmake \
+          g++ \
+          libboost-all-dev \
+          zlib1g-dev \
+          liblzma-dev \
+          git
 
     - name: Build
       run: |
